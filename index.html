@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <title>Depósito en línea</title>
+       
+      
+        <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+        <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *; img-src * " />
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+
+        <link rel="stylesheet" type="text/css" href="css/main.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+
+
+    </head>
+    <body style="margin-top:210px;">
+
+        <!-- Navbar -->
+        <nav class="fixed-top m-0 p-0 navbar  navbar-ligth " style="background:#fe6b04">
+            <h1 class="w-100 m-0 p-0" style="font-weight:100; line-height: 2em;font-size: 1.5em;color: white;"  href="#" >
+                <div class="hamburger-icon float-right collapsed " data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation" class="p-0 m-0 w-100 pr-0 mr-0 navbar-brand">
+                    <div style="margin:6px 0px!important;" class="bar-icon bar1"></div>
+                    <div style="margin:6px 0px!important;" class="bar-icon bar2"></div>
+                    <div style="margin:6px 0px!important;" class="bar-icon bar3"></div>
+                    <div style="margin:6px 0px!important;" class="bar-icon bar4"></div>
+                </div>
+                &nbsp;&nbsp;Deposito en linea
+
+            </h1>
+             <div style="color:white" class="bg-dark collapse navbar-collapse" id="navbarText">
+                <ul style="color:white; border-top: 1px solid gray!important;" class="navbar-nav mr-auto">
+                    <li class="nav-item ml-0 mr-0 pl-0 pr-0">
+                        <a style="color:white" class="nav-link ml-0 mr-0 pl-0 pr-0" href="#consultar">&nbsp;&nbsp;Nueva consulta</a>
+                    </li>
+                    <li class="dropdown-divider"></li>
+                    <li class="nav-item ml-0 mr-0 pl-0 pr-0">
+                        <a style="color:white" class="nav-link ml-0 mr-0 pl-0 pr-0" href="#historial"><i class="fa fa-hose" ></i></i>&nbsp;&nbsp;Consultas recientes</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- L -->
+        <div id="loader"><img src="img/loading.png"></div>
+        <!-- Consultar -->
+
+        <div id="consultar" class="my-tabs container-fluid hide m-0 p-0 w-100">
+            <p class="p-2 m-0 text-muted h6 text-center">
+                Consulta cuándo y cómo ingresó tu vehículo a los depósitos de la Secretaría de Administración
+            </p>
+            <div style=" color:red; width:90%;margin-left: auto!important; margin-right: auto!important" role="alert" aria-live="assertive" aria-atomic="true" class="h0 m-2 p-2 toast" data-autohide="false">
+                <div class="toast-header">
+                    <strong class="text-reset mr-auto" style="color:red!important">Error</strong>
+                    <button type="button" class="pr-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="toast-body"> </div>
+            </div>
+            <div class="row row-content">
+                <div class="text-center col6">
+                    <img  id="logo" alt="Logo Depósito en línea" class="img-fluid m-0" src="img/logo.png" />
+                </div>
+                <div class="col6">
+                   <!-- FORMULARIO INGRESO -->
+                   <form id="formBuscarAuto" method="post" class="text-left">
+                        <div class="form-group">
+                            <label for="InputPlaca" class="col-form-label col-form-label-sm">PLACAS DEL VEHÍCULO</label>
+                            <input type="text" style="padding-left: 7px!important;"  class="form-control form-control-sm" id="InputPlaca">
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label col-form-label-sm" for="InputSerie">NÚMERO DE SERIE</label>
+                            <input style="padding-left: 7px!important;" type="serie" class="form-control form-control-sm" id="InputSerie">
+                        </div>
+                        <a id="send_search" class="btn btn-primary btn-sm">&nbsp;&nbsp;CONSULTAR&nbsp;&nbsp;</a>
+                    </form>
+                    <!-- /FORMULARIO INGRESO -->
+                </div>
+            </div> 
+        </div>
+
+        <!-- Result -->
+        <div id="result" class="my-tabs container-fluid  m-0 p-0 w-100"><br><br>
+           
+            <p class="success   p-2 m-0 text-muted h6 text-center">
+                Estos son los datos encontrados del vehículo
+            </p>            
+            <div class="success   text-muted text-center">
+                <h3 class="text-reset">Proceso Administrativo de Ejecución</h3>
+                <h1 id="pae" class="text-reset">PAE 1</h1>
+            </div>
+            <form  class="p-3 success   text-form" id="consult_form">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                        <label for="plate_number">PLACAS DEL VEHÍCULO</label>
+                        <input value="FWD2P" class="plate_number form-control border-0" readonly="true" type="text" >
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                        <label for="serial_number">FECHA DE INGRESO</label>
+                        <input value="31-05-2016" class=" join_date form-control border-0" readonly="true" type="text" >
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                        <label for="serial_number">DEPÓSITO VEHICULAR</label>
+                        <input value="DEPOSITO 6 TUTELAR" class=" parking_lot form-control border-0" readonly="true" type="text" >
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                        <label for="plate_number">AUTORIDAD QUE REMITE</label>
+                        <input value="MINISTERIO PUBLICO" class="authority_name form-control border-0" readonly="true" type="text" >
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                        <label for="serial_number">COMPAÑÍA DE GRÚAS</label>
+                        <input value="GRUAS DANY'S" class="crane_name form-control border-0" readonly="true" type="text" >
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                        <label for="plate_number">PENSIÓN</label>
+                            <input value="$24,423.00" class="lodge form-control border-0" readonly="true" type="text" >
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                        <label for="serial_number">ARRASTRE DE GRÚA</label>
+                        <input value="$997.70" class="crane_cost form-control border-0" readonly="true" type="text" >
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                        <label for="serial_number">MANIOBRAS</label>
+                        <input value="$101.00" class="crane_maneuvers form-control border-0" readonly="true" type="text" >
+                        </div>
+                    </div>
+                </div>
+                
+               
+            </form>
+            <div style="display: none"class="mt-3 hide">
+                <label for="mapa">MAPA DE UBICACIÓN DEPÓSITO VEHICULAR</label>
+                <!-- CODIGO MAPA -->
+                <!--   <img src="img/mapa.jpg"  class="img-fluid" alt="">--> 
+            </div>           
+            <!-- Imagenes -->
+            <p class="p-2 m-0  text-muted h6 text-center">
+                Imágenes del ingreso al depósito
+            </p>
+            <div id="images" class="mr-2 ml-2 row text-center">
+                  
+            </div>
+            <!-- Aviso -->
+            <div class="alert  alert-primary p-3 m-3" role="alert">
+                <p class="text-09"><strong>Importante:</strong><br>
+                1. Los datos de esta pantalla son únicamente informativos. Si requiere de constancia o información adicional de manera oficial deberá de solicitarlos en la Secretaria de Administración<br>
+    
+                2. Los derechos fiscales de guarda y custodia se generan a partir del ingreso de la unidad y hasta su retiro de las áreas de depósito de la Secretaria de Administración conforme a la Ley de Ingresos vigente del Estado de Jalisco según el ejercicio fiscal de que se trate.<br>
+    
+                3. A partir de 180 días de guarda y custodia los vehículos pueden ser sujetos a Procedimientos Administrativos de Ejecución (PAE) y afectos a remate por adeudo generado confirme a las  disposiciones legales vigentes en el Estado en materia fiscal
+                </p>
+            </div>
+            <!-- /Aviso -->
+            <div class="jumbotron  p-3 m-3">
+                <p>
+                    Los adeudos generados por los servicio de grúa son independientes de derechos fiscales de la guarda y custodia de la unidad en depósito, y se establecen en base a tarifas determinadas por el Comité Tarifario del Estado, más información al respecto en la Dirección de la Secretaría de Transporte del Estado de Jalisco, en el correo: <a href="mailto:depositosvehiculares.sa@jalisco.gob.mx">
+                        depositosvehiculares.sa@jalisco.gob.mx
+                    </a>
+                </p>
+            </div>
+      <br>
+      <br>
+      <br>
+        </div>
+
+        <!-- Historial -->
+        <div id="historial" class="my-tabs container-fluid hide m-0 p-0 w-100">
+            <h6 class="p-2 m-0 text-muted h6 justify-content-between">Ultimos vehiculos consultados</h6>
+            <div id="history"class="list-group">
+                               
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="pos-f-t fixed-bottom ">
+            <div class="collapse" id="navbarToggleExternalContent">
+                <div class="bg-dark p-4">
+                    <h4 class="text-white">Secretaría de Administración</h4>
+                    <p class="texto-footer text-white">                       
+                        Av. Fray Antonio Alcalde # 1221, Colonia Miraflores, C.P. 44100, Guadalajara Jalisco<br>
+                        Tel. <a href="tel:+523338182800">+52 33 38182800 </a>, 
+                        <a href="mailto:depositosvehiculares.sa@jalisco.gob.mx">depositosvehiculares.sa@jalisco.gob.mx</a><br>
+                        Gobierno de Jalisco. 2019
+                        
+                    </p> 
+                </div>
+            </div>
+            <nav class=" m-0 p-0 navbar navbar-dark bg-dark">
+                <!-- Just an image -->
+                <a  class="text-center w-100" href="#">
+                    <div class="arrow-icon float-left collapsed" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation" class="p-0 m-0 w-100 pr-0 mr-0 navbar-brand">
+                            <div class="bar-arrow1"></div>
+                            <div class="bar-arrow2"></div>
+                        </div>
+                    <img src="img/isologo_gobjalisco.png"  style="" height="50" class="float-right d-inline-block align-top" alt="">
+                </a>
+            </nav>
+        </div>
+    
+    </body>
+    
+   <!-- <script type="text/javascript" src="cordova.js"></script> -->
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+      
+</html>
